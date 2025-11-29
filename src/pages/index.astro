@@ -1,0 +1,30 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Social from '../components/Social.astro';
+import {projects} from '../data/projects.js';
+---
+
+<DefaultLayout>
+    <div class="mb-10 justify-center">
+        <h2 class="text-4xl font-bold mb-4">About Me</h2>
+        <p class="text-lg text-gray-300 leading-relaxed">
+            Passionate Software engineer with +10 years of experience, designing and developing for large-scale projects
+            in big companies. My strengths are being self-taught and I'm good at solving difficult problems and learning
+            new programming languages, and I can adapt very quickly in different environments.
+        </p>
+
+        <div class="flex w-full p-5 justify-center items-center gap-4">
+            <Social url="https://github.com/caiotava" platform="GitHub"/>
+            <Social url="https://www.linkedin.com/in/caiotava/" platform="LinkedIn"/>
+            <Social url="https://caiotava.itch.io/" platform="Itch.io"/>
+        </div>
+    </div>
+
+    <h3 class="text-3xl font-bold mb-3">Here are some of my highlighted projects.</h3>
+    <div class="flex flex-col gap-24">
+        {projects.map((project) =>
+                <ProjectCard projectData={project}/>)}
+    </div>
+
+</DefaultLayout>

@@ -1,0 +1,93 @@
+---
+const {projectData} = Astro.props;
+---
+
+<div
+        class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start rounded-lg bg-gray-900 shadow-lg drop-shadow-[4px_4px_0_#7836cf] p-6"
+>
+    <div class="project-block flex flex-col gap-4">
+        <!-- preview -->
+        <div class="preview-container w-full">
+            <img
+                    id="preview-media"
+                    src={projectData.gallery[0]}
+                    alt={projectData.title}
+                    class="rounded-lg shadow-lg w-full max-h-[400px] object-contain transition-all duration-300"
+                    data-type="image"
+            />
+        </div>
+
+        <!-- gallery -->
+        <div class="grid grid-cols-3 gap-3">
+            {projectData.gallery.map((item: any) =>
+                !item.includes("png") && !item.includes("gif") ? (
+                        <div class="relative cursor-pointer group" data-type="video" data-id={item}>
+                            <img
+                                    src=`https://img.youtube.com/vi/${item}/hqdefault.jpg`
+                                    class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer"
+                            />
+                            <div class="absolute inset-0 flex items-center justify-center opacity-80 group-hover:opacity-100 transition">
+                                <svg
+                                        class="w-16 h-16 text-white drop-shadow-lg"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                >
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                ) : (
+                        <img
+                                src={item}
+                                class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer"
+                                data-type="image"
+                        />
+                )
+            )}
+        </div>
+    </div>
+
+    <!-- right column -->
+    <div class="flex flex-col justify-start">
+        <h3 class="text-3xl font-bold mb-4">{projectData.title}</h3>
+
+        <p class="text-gray-300 mb-6 leading-relaxed">
+            {projectData.description}
+        </p>
+
+        <ul class="space-y-2 mb-10">
+            {Object.entries(projectData.skills).map(([category, values]) => (
+                    <div class="block">
+                        <li class="p-1 bg-gray-700 text-sm rounded inline-block">
+                            <span class="font-semibold">{category}: </span>
+                            <span set:html={values.join(', ')}></span>
+                        </li>
+                    </div>
+            ))}
+        </ul>
+
+        <div class="flex gap-4">
+            {projectData.playUrl && (
+                    <a
+                            href={projectData.playUrl}
+                            target="_blank"
+                            class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                        ▶ Play
+                    </a>
+            )}
+
+            {projectData.sourceUrl && (
+                    <a
+                            href={projectData.sourceUrl}
+                            target="_blank"
+                            class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-800 text-white"
+                    >
+                        Source Code
+                    </a>
+            )}
+        </div>
+    </div>
+</div>
+
+<script src="../scripts/projectGallery.js"></script>
